@@ -7,17 +7,27 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./configs:/etc/nginx/vhost.d
-      - ./certs:/etc/nginx/certs
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
 
   acme:
     container_name: nginx-proxy-acme
     image: nginxproxy/acme-companion
     volumes:
-      - ./acme:/etc/acme.sh
-      - ./certs:/etc/nginx/certs
+      - certs:/etc/nginx/certs:rw
+      - acme:/etc/acme.sh
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
       - NGINX_PROXY_CONTAINER=nginx-proxy
       - DEFAULT_EMAIL=alexflores120@gmail.com
+
+
+volumes:
+  conf:
+  vhost:
+  html:
+  certs:
+  acme:
