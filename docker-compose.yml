@@ -1,7 +1,7 @@
 version: '3.6'
 services:
   nginx:
-    name: nginx-proxy
+    container_name: nginx-proxy
     image: nginxproxy/nginx-proxy
     ports:
       - "80:80"
@@ -18,8 +18,7 @@ services:
       - acme:/etc/acme.sh
       - ./certs:/etc/nginx/certs
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    volumes-from:
-      - nginx-proxy
+
     environment:
       - NGINX_PROXY_CONTAINER=nginx-proxy
       - DEFAULT_EMAIL=alexflores120@gmail.com
