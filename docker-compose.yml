@@ -5,8 +5,21 @@ services:
     image: nginxproxy/nginx-proxy
     ports:
       - "80:80"
-      - 443:443
+      - "443:443"
     volumes:
       - ./configs:/etc/nginx/vhost.d
       - ./certs:/etc/nginx/certs
       - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  acme:
+    name: nginx-proxy-acme
+    image: nginxproxy/acme-companion
+    volumes:
+      - acme:/etc/acme.sh
+      - ./certs:/etc/nginx/certs
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    volumes-from:
+      - nginx-proxy
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+      - DEFAULT_EMAIL=alexflores120@gmail.com
