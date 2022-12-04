@@ -18,7 +18,6 @@ services:
       - acme:/etc/acme.sh
       - ./certs:/etc/nginx/certs
       - /var/run/docker.sock:/var/run/docker.sock:ro
-
     environment:
       - NGINX_PROXY_CONTAINER=nginx-proxy
       - DEFAULT_EMAIL=alexflores120@gmail.com
