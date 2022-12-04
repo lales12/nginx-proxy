@@ -12,7 +12,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
   acme:
-    name: nginx-proxy-acme
+    container_name: nginx-proxy-acme
     image: nginxproxy/acme-companion
     volumes:
       - acme:/etc/acme.sh
